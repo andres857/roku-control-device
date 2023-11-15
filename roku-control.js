@@ -2,7 +2,7 @@ const { RokuClient, Keys } = require('roku-client');
 const { streaming  } = require('./utils');
 
 // IP Roku Device
-const client = new RokuClient('http://192.168.5.115');
+const client = new RokuClient('http://192.168.2.10');
 
 function updateObjectStreamingPlay(data){
   streaming.name = data.plugin.name;
@@ -24,72 +24,67 @@ function updateObjectStreamingStop(data){
   console.log(streaming);
 }
 
-// verificar 10 veces cada 2 segundos despues de que se habra la App, si esta el streaming
-function streamingIsPlaying() {
-    return new Promise((resolve, reject) => {
-      let count = 0;
-  
-      function checkStreaming() {
-        setTimeout(() => {
-          client.mediaPlayer()
-            .then((streaming) => {
-              if (streaming.state === 'play') {
-                resolve(streaming);
-              } else {
-                console.log('count', count);
-                count++;
-                if (count === 10) {
-                  reject(new Error('Se ha alcanzado el límite de intentos sin encontrar el streaming en estado "play".'));
-                } else {
-                  checkStreaming(); // Llama recursivamente para realizar el siguiente chequeo
-                }
-              }
-            })
-            .catch((error) => {
-              reject(error);
-            });
-        }, 2000);
-      }
-      checkStreaming(); // Inicia el proceso de verificación
-    });
-}
-
-function streamingIsClose() {
-  return new Promise((resolve, reject) => {
+function isStreamingActive(maxAttempts, interval) {
+  return new Promise(async (resolve, reject) => {
     let count = 0;
 
-    function checkStreamingStop() {
-      setTimeout(() => {
-        client.mediaPlayer()
-          .then((streaming) => {
-            console.log(streaming);
-            if (streaming.state === 'close') {
-              resolve(
-                updateObjectStreamingStop(streaming)
-              );
-            } else {
-              console.log('count stop', count);
-              count++;
-              if (count === 10) {
-                reject(new Error('Se ha alcanzado el límite de intentos sin encontrar el streaming en estado "stop".'));
-              } else {
-                checkStreamingStop(); // Llama recursivamente para realizar el siguiente chequeo
-              }
-            }
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      }, 500);
+    async function checkStreaming() {
+        const streaming = await client.mediaPlayer();
+
+        if (streaming.state === 'play') {
+          resolve(true);
+        } else {
+          console.log('count open Streaming ', count);
+          count++;
+
+          if (count === maxAttempts) {
+            reject(false);
+          } else {
+            // Llama recursivamente para realizar el siguiente chequeo después del intervalo
+            setTimeout(checkStreaming, interval*1000);
+          }
+        }
     }
-    checkStreamingStop(); // Inicia el proceso de verificación
+    // Inicia el proceso de verificación
+    checkStreaming();
+  });
+}
+
+function isStreamingClose(maxAttempts, interval) {
+  return new Promise(async (resolve, reject) => {
+    let count = 0;
+
+    async function checkStreaming() {
+        const streaming = await client.mediaPlayer();
+        console.log('------------');
+        console.log(streaming);
+        console.log('------------');
+        if (streaming.state === 'close' || streaming.state === 'none') {
+          console.log("Streaming CLOSE");
+          resolve(true);
+        } else {
+          console.log('count close Streaming ', count);
+          count++;
+
+          if (count === maxAttempts) {
+            reject(false);
+          } else {
+            // Llama recursivamente para realizar el siguiente chequeo después del intervalo
+            setTimeout(checkStreaming, interval*1000);
+          }
+        }
+    }
+    // Inicia el proceso de verificación
+    checkStreaming();
   });
 }
 
 async function restartStreaming(id){
   try {
-    await closeStreaming();
-    await openStreaming(id); 
+    const close = await closeStreaming();
+    if (close){
+      await openStreaming(id);
+    }
   } catch (error) {
     console.error('Error: ', error);
   }
@@ -99,7 +94,8 @@ async function closeStreaming() {
   try {
     await client.keypress('HOME');
     console.log('CLOSING STREAMING');
-    await streamingIsClose();
+    const stateStreaming = await isStreamingClose(30,3);
+    return stateStreaming;
   } catch (error) {
    console.error('Error: ', error); 
   }
@@ -108,24 +104,25 @@ async function closeStreaming() {
 async function openStreaming(idApp){
     // comprobar si la app ya esta abierta, 252585
     const homeScreen = await client.active();
-    if (homeScreen !== null) {
+    // console.log(homeScreen);
+    if (homeScreen === null) {
+        // Open Streaming
+          console.log('HOME VIEW');
+          try {
+            await client.launch(idApp);
+            const data = await isStreamingActive(30, 3);
+            console.log(data);
+          } catch (error) {
+            console.error(error.message)
+          }
+          
+    }else{
+        console.log('El streaming ya esta abierto 0');
         const statusApp = await client.mediaPlayer();
         console.log(statusApp);
-    }else{
-        // Open Streaming
-        try {
-          console.log('home view');
-          await client.launch(idApp);
-          console.log('[ APP Streaming open ]');
-          const data = await streamingIsPlaying();
-          updateObjectStreamingPlay(data);
-        } catch (error) {
-          streaming.state = 'stop';
-          console.erro('Error: ', error);
-        }
     }
 }
-// openStreaming('252585');
+// openStreaming(252585);
 restartStreaming('252585');
 // closeStreaming();
 
