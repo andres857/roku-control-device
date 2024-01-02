@@ -1,0 +1,85 @@
+
+####### STARTUP Tue Jan  2 03:29:55 PM EST 2024 ######
+
+ Programando tarea: 7:59:15
+ Programando tarea: 11:59:15
+ Programando tarea: 13:59:15
+ Programando tarea: 15:30:15
+HomeView
+{
+  name: 'Home',
+  id: '562859',
+  type: 'appl',
+  version: '10.2.520',
+  uiLocation: 'home'
+}
+launch Univision APP
+Univision APP open
+Tarea ejecutada: 2024-01-2 / 15:30:30
+La emision ha comenzado
+{
+  name: 'Univision NOW',
+  id: '122460',
+  type: 'appl',
+  version: '3.8.3',
+  uiLocation: '122460'
+}
+
+####### STARTUP Tue Jan  2 03:43:38 PM EST 2024 ######
+
+ Programando tarea: 7:59:15
+ Programando tarea: 11:59:15
+ Programando tarea: 13:59:15
+ Programando tarea: 15:46:15
+HomeView
+{
+  name: 'Home',
+  id: '562859',
+  type: 'appl',
+  version: '10.2.520',
+  uiLocation: 'home'
+}
+launch Univision APP
+Univision APP open
+Tarea ejecutada: 2024-01-2 / 15:46:30
+La emision ha comenzado
+{
+  name: 'Univision NOW',
+  id: '122460',
+  type: 'appl',
+  version: '3.8.3',
+  uiLocation: '122460'
+}
+
+####### STARTUP Tue Jan  2 03:48:01 PM EST 2024 ######
+
+ Programando tarea: 7:59:15
+ Programando tarea: 11:59:15
+ Programando tarea: 13:59:15
+ Programando tarea: 15:59:15
+
+####### STARTUP Tue Jan  2 03:56:06 PM EST 2024 ######
+
+ Programando tarea: 7:59:15
+ Programando tarea: 11:59:15
+ Programando tarea: 13:59:15
+ Programando tarea: 15:59:15
+HomeView
+{
+  name: 'Home',
+  id: '562859',
+  type: 'appl',
+  version: '10.2.520',
+  uiLocation: 'home'
+}
+launch Univision APP
+Univision APP open
+Tarea ejecutada: 2024-01-2 / 15:59:30
+La emision ha comenzado
+{
+  name: 'Univision NOW',
+  id: '122460',
+  type: 'appl',
+  version: '3.8.3',
+  uiLocation: '122460'
+}

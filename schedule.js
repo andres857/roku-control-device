@@ -24,7 +24,7 @@ ruleStreaming14.second = 15;
 
 const ruleStreaming16 = new schedule.RecurrenceRule();
 ruleStreaming16.dayOfWeek = [0, new schedule.Range(1, 5)]; // Ejecutar de lunes a viernes
-ruleStreaming16.hour = 15; 
+ruleStreaming16.hour = 15;
 ruleStreaming16.minute = 59;
 ruleStreaming16.second = 15;
 
@@ -32,10 +32,9 @@ function startStreaming(){
     console.log(` Programando tarea: ${ruleStreaming8.hour}:${ruleStreaming8.minute}:${ruleStreaming8.second}`);
     schedule.scheduleJob(ruleStreaming8, function(){
         restartBroadcast().then(()=>{
-            console.log('Tarea programada ejecutada a las 8:00 AM');
             const logTime = getTimeLog();
             console.log(`Tarea ejecutada: ${logTime}`);
-        }).catch( e = console.log(e));
+        }).catch( (error) => console.log(error));
     });
 }
 
@@ -43,34 +42,29 @@ function startStreaming12(){
     console.log(` Programando tarea: ${ruleStreaming12.hour}:${ruleStreaming12.minute}:${ruleStreaming12.second}`);
     schedule.scheduleJob(ruleStreaming12, function(){
         restartBroadcast().then(()=>{
-            console.log('Tarea programada ejecutada a las 12:00 AM');
             const logTime = getTimeLog();
             console.log(`Tarea ejecutada: ${logTime}`);
-        }).catch( e = console.log(e));
+        }).catch( (error) => console.log(error));
     });
 }
     
 function startStreaming14(){
     console.log(` Programando tarea: ${ruleStreaming14.hour}:${ruleStreaming14.minute}:${ruleStreaming14.second}`);
     schedule.scheduleJob(ruleStreaming12, function(){
-        console.log('Tarea programada ejecutada a las 2:00 PM');
         restartBroadcast().then(()=>{
-            console.log('Tarea programada ejecutada a las 2:00 PM');
             const logTime = getTimeLog();
             console.log(`Tarea ejecutada: ${logTime}`);
-        }).catch( e = console.log(e));
+        }).catch( (error) => console.log(error));
     });
 }
 
  function startStreaming16(){
     console.log(` Programando tarea: ${ruleStreaming16.hour}:${ruleStreaming16.minute}:${ruleStreaming16.second}`);
     schedule.scheduleJob(ruleStreaming16, function(){
-        console.log('Tarea programada ejecutada a las 4:00 PM');
         restartBroadcast().then(()=>{
-            console.log('Tarea programada ejecutada a las 4:00 PM');
             const logTime = getTimeLog();
             console.log(`Tarea ejecutada: ${logTime}`);
-        }).catch( e = console.log(e));
+        }).catch( (error) => console.log(error));
     });
 }
 

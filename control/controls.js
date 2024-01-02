@@ -64,7 +64,6 @@ async function restartBroadcast(){
     commands();
     setTimeout(async () => {
         await getAppActive();
-
     }, 5000);
 }
 
