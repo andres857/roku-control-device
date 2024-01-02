@@ -2,28 +2,13 @@ const { RokuClient, Keys } = require('roku-client');
 const { streaming  } = require('./utils');
 
 // IP Roku Device
-const client = new RokuClient('http://192.168.2.10');
+const client = new RokuClient('http://192.168.1.227');
 
-function updateObjectStreamingPlay(data){
-  streaming.name = data.plugin.name;
-  streaming.id = data.plugin.id;
-  streaming.state = data.state;
-  streaming.position = data.position;
-  streaming.duration = data.duration;
-  streaming.error = data.error;
-  console.log(streaming);
+
+async function GetAppsInstaller(){
+  const apps = await client.apps();
+  console.log(apps);
 }
-
-function updateObjectStreamingStop(data){
-  streaming.name = '';
-  streaming.id = '';
-  streaming.state = data.state;
-  streaming.position = '';
-  streaming.duration = '';
-  streaming.error = data.error;
-  console.log(streaming);
-}
-
 function isStreamingActive(maxAttempts, interval) {
   return new Promise(async (resolve, reject) => {
     let count = 0;
@@ -104,8 +89,8 @@ async function closeStreaming() {
 async function openStreaming(idApp){
     // comprobar si la app ya esta abierta, 252585
     const homeScreen = await client.active();
-    // console.log(homeScreen);
-    if (homeScreen === null) {
+    console.log(homeScreen);
+    if (homeScreen.name === 'Home') {
         // Open Streaming
           console.log('HOME VIEW');
           try {
@@ -122,12 +107,14 @@ async function openStreaming(idApp){
         console.log(statusApp);
     }
 }
-// openStreaming(252585);
-restartStreaming('252585');
+// openStreaming(122460);
+restartStreaming('122460');
 // closeStreaming();
+// GetAppsInstaller();
 
 module.exports = {
   openStreaming,
   restartStreaming,
-  closeStreaming
+  closeStreaming,
+  GetAppsInstaller
 }

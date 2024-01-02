@@ -36,5 +36,12 @@
     id: '837',
     type: 'appl',
     version: '2.23.115025138'
+  },
+  {
+    name: 'Univision NOW',
+    id: '122460',
+    type: 'appl',
+    version: '3.8.3'
   }
+
 ]
