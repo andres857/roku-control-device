@@ -1,18 +1,19 @@
-const { RokuClient, Keys } = require('roku-client');
-
+const { RokuClient } = require('roku-client');
 
 const client = new RokuClient('http://192.168.1.227');
+
+
 // RokuClient.discoverAll().then((clients) => {
 //     console.log(clients.map((c) => c.ip));
 //     // ['http://192.168.1.17:8060', 'http://192.168.1.18:8060', ...]
 // });
 
-async function GetAppsInstaller(){
+async function getAppsInstaller(){
     const apps = await client.apps();
     console.log(apps);
 }
 
-async function GetAppActive(){
+async function getAppActive(){
     const active = await client.active();
     console.log(active);
 }
@@ -23,7 +24,7 @@ function delay(time) {
     });
 }
 
-async function LaunchUnivisionApp(){
+async function launchUnivisionApp(){
     console.log('launch Univision APP');
     return new Promise (async (resolve, reject)=>{
         await client.launch(122460);        
@@ -58,14 +59,19 @@ console.log(status);
 
 async function restartBroadcast(){
     const home = await closeStreaming();
-    await GetAppActive();
-    const startApp = await LaunchUnivisionApp();
+    await getAppActive();
+    const startApp = await launchUnivisionApp();
     commands();
     setTimeout(async () => {
-        await GetAppActive();
+        await getAppActive();
 
     }, 5000);
 }
 
-restartBroadcast();
-GetAppActive();
+// restartBroadcast();
+// getAppActive();
+
+module.exports = {
+    restartBroadcast,
+    getAppActive,
+}

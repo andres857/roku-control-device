@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "node-schedule": "^2.1.1",
     "nodeku": "^1.0.20",
     "nodemon": "^3.0.1",
     "roku-client": "^5.2.0",
