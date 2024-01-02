@@ -1,50 +1,78 @@
 const schedule = require('node-schedule');
-const { restartBroadcast } = require('./control/controls')
+const { restartBroadcast } = require('./control/controls');
+const { getTimeLog} = require( './utils');
 
 // Define la regla para ejecutar la tarea
 const ruleStreaming8 = new schedule.RecurrenceRule();
 ruleStreaming8.dayOfWeek = [0, new schedule.Range(1, 5)]; // Ejecutar de lunes a viernes
 ruleStreaming8.hour = 7; 
 ruleStreaming8.minute = 59;
-
+ruleStreaming8.second = 15;
 
 const ruleStreaming12 = new schedule.RecurrenceRule();
 ruleStreaming12.dayOfWeek = [0, new schedule.Range(1, 5)]; // Ejecutar de lunes a viernes
 ruleStreaming12.hour = 11; 
 ruleStreaming12.minute = 59; 
+ruleStreaming12.second = 15;
 
 
 const ruleStreaming14 = new schedule.RecurrenceRule();
 ruleStreaming14.dayOfWeek = [0, new schedule.Range(1, 5)]; // Ejecutar de lunes a viernes
 ruleStreaming14.hour = 13; 
 ruleStreaming14.minute = 59; 
-
+ruleStreaming14.second = 15;
 
 const ruleStreaming16 = new schedule.RecurrenceRule();
 ruleStreaming16.dayOfWeek = [0, new schedule.Range(1, 5)]; // Ejecutar de lunes a viernes
 ruleStreaming16.hour = 15; 
-ruleStreaming16.minute = 59; 
+ruleStreaming16.minute = 59;
+ruleStreaming16.second = 15;
 
+function startStreaming(){
+    console.log(` Programando tarea: ${ruleStreaming8.hour}:${ruleStreaming8.minute}:${ruleStreaming8.second}`);
+    schedule.scheduleJob(ruleStreaming8, function(){
+        restartBroadcast().then(()=>{
+            console.log('Tarea programada ejecutada a las 8:00 AM');
+            const logTime = getTimeLog();
+            console.log(`Tarea ejecutada: ${logTime}`);
+        }).catch( e = console.log(e));
+    });
+}
 
-const startStreaming = schedule.scheduleJob(ruleStreaming8, async function(){
-    console.log('Tarea programada ejecutada a las 8:00 AM');
-    await restartBroadcast()
-});
+function startStreaming12(){
+    console.log(` Programando tarea: ${ruleStreaming12.hour}:${ruleStreaming12.minute}:${ruleStreaming12.second}`);
+    schedule.scheduleJob(ruleStreaming12, function(){
+        restartBroadcast().then(()=>{
+            console.log('Tarea programada ejecutada a las 12:00 AM');
+            const logTime = getTimeLog();
+            console.log(`Tarea ejecutada: ${logTime}`);
+        }).catch( e = console.log(e));
+    });
+}
+    
+function startStreaming14(){
+    console.log(` Programando tarea: ${ruleStreaming14.hour}:${ruleStreaming14.minute}:${ruleStreaming14.second}`);
+    schedule.scheduleJob(ruleStreaming12, function(){
+        console.log('Tarea programada ejecutada a las 2:00 PM');
+        restartBroadcast().then(()=>{
+            console.log('Tarea programada ejecutada a las 2:00 PM');
+            const logTime = getTimeLog();
+            console.log(`Tarea ejecutada: ${logTime}`);
+        }).catch( e = console.log(e));
+    });
+}
 
-const startStreaming12 = schedule.scheduleJob(ruleStreaming12, async function(){
-    console.log('Tarea programada ejecutada a las 12:00 PM');
-    await restartBroadcast()
-});
-
-const startStreaming14 = schedule.scheduleJob(ruleStreaming12, async function(){
-    console.log('Tarea programada ejecutada a las 2:00 PM');
-    await restartBroadcast()
-});
-
-const startStreaming16 = schedule.scheduleJob(ruleStreaming12, async function(){
-    console.log('Tarea programada ejecutada a las 4:00 PM');
-    await restartBroadcast()
-});
+ function startStreaming16(){
+    console.log(` Programando tarea: ${ruleStreaming16.hour}:${ruleStreaming16.minute}:${ruleStreaming16.second}`);
+    schedule.scheduleJob(ruleStreaming16, function(){
+        console.log('Tarea programada ejecutada a las 4:00 PM');
+        restartBroadcast().then(()=>{
+            console.log('Tarea programada ejecutada a las 4:00 PM');
+            const logTime = getTimeLog();
+            console.log(`Tarea ejecutada: ${logTime}`);
+        }).catch( e = console.log(e));
+    });
+}
 
 module.exports = {
     startStreaming,

@@ -1,6 +1,7 @@
-const {  startStreaming12, startStreaming14, startStreaming16 } = require ('./schedule.js');
+const sched = require ('./schedule.js');
 
-// startStreaming();
-startStreaming12();
-startStreaming14();
-startStreaming16();
+sched.startStreaming();
+sched.startStreaming12();
+sched.startStreaming14();
+sched.startStreaming16();
+
