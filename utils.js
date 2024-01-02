@@ -12,7 +12,9 @@ const apps = [
         status: 'closed'
     }
 ];
+
 const ipRokuDevice = 'http://192.168.5.115';
+
 const streaming = {
     name: '',
     id: '',

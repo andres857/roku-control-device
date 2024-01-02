@@ -1,3 +1,6 @@
-const { openStreaming, restartStreaming, closeStreaming } = require ('./roku-control');
+const {  startStreaming12, startStreaming14, startStreaming16 } = require ('./schedule.js');
 
-// openStreaming('252585');
+// startStreaming();
+startStreaming12();
+startStreaming14();
+startStreaming16();
