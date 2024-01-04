@@ -50,7 +50,7 @@ function startStreaming12(){
     
 function startStreaming14(){
     console.log(` Programando tarea: ${ruleStreaming14.hour}:${ruleStreaming14.minute}:${ruleStreaming14.second}`);
-    schedule.scheduleJob(ruleStreaming12, function(){
+    schedule.scheduleJob(ruleStreaming14, function(){
         restartBroadcast().then(()=>{
             const logTime = getTimeLog();
             console.log(`Tarea ejecutada: ${logTime}`);
